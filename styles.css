@@ -133,6 +133,8 @@ body {
     font-weight: 500;
     transition: color 0.3s ease;
     position: relative;
+    display: block;
+    padding: 10px 0;
 }
 
 .nav-link:hover {
@@ -646,22 +648,46 @@ body {
         display: flex;
     }
 
+    .nav-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.15);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+        z-index: 999;
+    }
+
+    .nav-overlay.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .nav-menu {
         position: fixed;
-        left: -100%;
-        top: 70px;
+        top: 64px; /* sit below the navbar */
+        right: 0;
+        height: min(calc(100vh - 64px), clamp(40vh, 60vh, 80vh));
+        width: clamp(220px, 40vw, 360px); /* between ~1/4 and ~1/2 screen */
         flex-direction: column;
-        background-color: white;
-        width: 100%;
-        text-align: center;
-        transition: 0.3s;
-        box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
-        padding: 2rem 0;
+        background-color: #ffffff;
+        text-align: left;
+        transition: transform 0.3s ease;
+        transform: translateX(100%);
+        box-shadow: -8px 0 24px rgba(0, 0, 0, 0.12);
+        padding: 20px 24px 24px;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        z-index: 1000;
+        overflow-y: auto;
     }
 
     .nav-menu.active {
-        left: 0;
+        transform: translateX(0);
     }
+
+    /* make hamburger above overlay */
+    .hamburger { position: relative; z-index: 1001; }
 
     .hero-container {
         grid-template-columns: 1fr;

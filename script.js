@@ -1,16 +1,29 @@
 // Mobile Navigation Toggle
 const hamburger = document.querySelector('.hamburger');
 const navMenu = document.querySelector('.nav-menu');
+const navOverlay = document.querySelector('.nav-overlay');
 
-hamburger.addEventListener('click', () => {
-    hamburger.classList.toggle('active');
-    navMenu.classList.toggle('active');
-});
+function toggleMenu(forceOpen) {
+    const shouldOpen = typeof forceOpen === 'boolean' ? forceOpen : !navMenu.classList.contains('active');
+    if (shouldOpen) {
+        hamburger.classList.add('active');
+        navMenu.classList.add('active');
+        navOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    } else {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+hamburger.addEventListener('click', () => toggleMenu());
+navOverlay.addEventListener('click', () => toggleMenu(false));
 
 // Close mobile menu when clicking on a link
 document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
-    hamburger.classList.remove('active');
-    navMenu.classList.remove('active');
+    toggleMenu(false);
 }));
 
 // Smooth scrolling for navigation links
